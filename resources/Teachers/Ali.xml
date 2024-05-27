@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="22" class="java.beans.XMLDecoder">
+ <object class="Main.Teacher" id="Teacher0">
+  <void property="PASSWORD">
+   <string>1234</string>
+  </void>
+  <void property="birthDate">
+   <object class="java.util.Date">
+    <long>-27048915000000</long>
+   </object>
+  </void>
+  <void property="courses">
+   <void method="add">
+    <object class="Main.Course">
+     <void property="beheshtiUniversityField">
+      <object class="java.lang.Enum" id="BeheshtiUniversityField0" method="valueOf">
+       <class>Main.BeheshtiUniversityField</class>
+       <string>MEDICINE_HEALTHCARE</string>
+      </object>
+     </void>
+     <void property="credit">
+      <int>3</int>
+     </void>
+     <void property="name">
+      <string>Ap</string>
+     </void>
+     <void property="teacherName">
+      <string>Ali</string>
+     </void>
+    </object>
+   </void>
+  </void>
+  <void property="fatherName">
+   <string>a</string>
+  </void>
+  <void property="field">
+   <object idref="BeheshtiUniversityField0"/>
+  </void>
+  <void property="gender">
+   <object class="java.lang.Enum" method="valueOf">
+    <class>Main.Gender</class>
+    <string>Male</string>
+   </object>
+  </void>
+  <void property="name">
+   <string>Ali</string>
+  </void>
+  <void property="nationalId">
+   <string>12</string>
+  </void>
+ </object>
+</java>
