@@ -36,12 +36,6 @@
   <void property="field">
    <object idref="BeheshtiUniversityField0"/>
   </void>
-  <void property="gender">
-   <object class="java.lang.Enum" method="valueOf">
-    <class>Main.Gender</class>
-    <string>Male</string>
-   </object>
-  </void>
   <void property="name">
    <string>Ali</string>
   </void>

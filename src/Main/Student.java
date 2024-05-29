@@ -19,7 +19,6 @@ public class Student {
     private String name;
     private String PASSWORD;
     private final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd ");
-    private Gender gender;
     private String FatherName;
     private Date BirthDate;
     private String NationalId;
@@ -28,7 +27,6 @@ public class Student {
     private String phoneNumber;
     private int currentTerm=0;
     private ArrayList<Term> terms = new ArrayList<>();
-    private boolean isDormitory;
     private double totalAverage=0;
     private double currentAverage=0;
     private int totalPassedCredit=0;
@@ -61,14 +59,6 @@ public Student(String name,String studentId){
 
     public DateFormat getDateFormat() {
         return dateFormat;
-    }
-
-    public boolean isDormitory() {
-        return isDormitory;
-    }
-
-    public void setDormitory(boolean dormitory) {
-        isDormitory = dormitory;
     }
 
     public ArrayList<Term> getTerms() {
@@ -283,16 +273,6 @@ public Student(String name,String studentId){
      */
     public void CurrentTermAvgPrinter(){
         System.out.println(termAvgDetail());
-    }
-
-
-    public Gender getGender() {
-        return gender;
-    }
-
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
     }
 
 

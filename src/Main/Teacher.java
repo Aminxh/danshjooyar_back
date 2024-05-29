@@ -22,7 +22,6 @@ public class Teacher {
     private ArrayList<Course> courses = new ArrayList<>();
     private final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd ");
     private Date BirthDate;
-    private Gender gender;
     private String FatherName;
     private String NationalId;
     private String phoneNumber;
@@ -183,14 +182,6 @@ public class Teacher {
 
     public void setBirthDate(Date birthDate) {
         BirthDate = birthDate;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
     }
 
     public String getFatherName() {
