@@ -1,7 +1,6 @@
 package menu;
 
 import Main.BeheshtiUniversityField;
-import Main.Gender;
 import Main.Teacher;
 
 import java.beans.XMLEncoder;
@@ -12,15 +11,6 @@ import java.util.Scanner;
 
 public class RegisterTeacher {
     public static void register() throws IOException, InterruptedException {
-//         String name;
-//         String PASSWORD;
-//         Date BirthDate;
-//         Gender gender;
-//         String FatherName;
-//         String NationalId;
-//         String phoneNumber;
-//         BeheshtiUniversityField field;
-
         Scanner scanner =new Scanner(System.in);
         Teacher teacher =new Teacher();
         System.out.println("Enter your name");
@@ -30,16 +20,6 @@ public class RegisterTeacher {
         System.out.println("Enter your BirthDate (yyyy/MM/dd) ");
         String date=scanner.nextLine();
         teacher.setBirthDate(new Date(date));
-        System.out.println("""
-                Enter your gender
-                1-Male
-                2-Female""");
-        String c=scanner.nextLine();
-        if(Objects.equals(c, "1")) {
-            teacher.setGender(Gender.Male);
-        } else {
-            teacher.setGender(Gender.Female);
-        }
         System.out.println("Enter your father name");
         teacher.setFatherName(scanner.nextLine());
         System.out.println("Enter your national ID");
