@@ -71,7 +71,7 @@ fos.close();
                         break;
                     }
                     case "2": {
-                        FileOutputStream fos = new FileOutputStream("C:\\Users\\USER\\IdeaProjects\\daneshjoyar\\resources\\Teachers" + "\\" + teacher.getName() + ".xml");
+                        FileOutputStream fos = new FileOutputStream("resources\\Teachers" + "\\" + teacher.getName() + ".xml");
                         XMLEncoder writer = new XMLEncoder(fos);
                         try {
                             validInput = true;
@@ -116,13 +116,13 @@ fos.close();
                         break;
                     }
                     case "3": {
-                        FileOutputStream fos = new FileOutputStream("C:\\Users\\USER\\IdeaProjects\\daneshjoyar\\resources\\Teachers" + "\\" + teacher.getName() + ".xml");
+                        FileOutputStream fos = new FileOutputStream("resources\\Teachers" + "\\" + teacher.getName() + ".xml");
                         XMLEncoder writer = new XMLEncoder(fos);
                         try {
                             validInput = true;
-                            System.out.println("First Enter Course Then " +
-                                    "Enter new students number" +
-                                    " then their name and studentID (name-StudentID)");
+                            System.out.println("First type Course name Then press Enter\n" +
+                                    "Then type number of new students you wanna to add and press Enter\n" +
+                                    "At the end Enter students info in this format : name-StudentID\n");
                             String courseName = scanner.nextLine();
                             String number = scanner.nextLine();
                             int number2 = Integer.parseInt(number);
@@ -170,7 +170,7 @@ fos.close();
 
                     case "4":
                     {
-                        FileOutputStream fos = new FileOutputStream("C:\\Users\\USER\\IdeaProjects\\daneshjoyar\\resources\\Teachers" + "\\" + teacher.getName() + ".xml");
+                        FileOutputStream fos = new FileOutputStream("resources\\Teachers" + "\\" + teacher.getName() + ".xml");
                         XMLEncoder writer = new XMLEncoder(fos);
                         try {
 
@@ -221,7 +221,7 @@ fos.close();
                     case "5":
 
                     {
-                        FileOutputStream fos = new FileOutputStream("C:\\Users\\USER\\IdeaProjects\\daneshjoyar\\resources\\Teachers" + "\\" + teacher.getName() + ".xml");
+                        FileOutputStream fos = new FileOutputStream("resources\\Teachers" + "\\" + teacher.getName() + ".xml");
                         XMLEncoder writer = new XMLEncoder(fos);
                         try {
                             validInput = true;
@@ -281,7 +281,7 @@ fos.close();
                         break;
                     }
                     case "6": {
-                        FileOutputStream fos = new FileOutputStream("C:\\Users\\USER\\IdeaProjects\\daneshjoyar\\resources\\Teachers" + "\\" + teacher.getName() + ".xml");
+                        FileOutputStream fos = new FileOutputStream("resources\\Teachers" + "\\" + teacher.getName() + ".xml");
                         XMLEncoder writer = new XMLEncoder(fos);
                         try {
 
@@ -329,7 +329,7 @@ fos.close();
                         break;
                     }
                     case "7": {
-                        FileOutputStream fos = new FileOutputStream("C:\\Users\\USER\\IdeaProjects\\daneshjoyar\\resources\\Teachers" + "\\" + teacher.getName() + ".xml");
+                        FileOutputStream fos = new FileOutputStream("resources\\Teachers" + "\\" + teacher.getName() + ".xml");
                         XMLEncoder writer = new XMLEncoder(fos);
                         try {
 
@@ -380,7 +380,7 @@ fos.close();
                         break;
                     }
                     case "8": {
-                        FileOutputStream fos = new FileOutputStream("C:\\Users\\USER\\IdeaProjects\\daneshjoyar\\resources\\Teachers" + "\\" + teacher.getName() + ".xml");
+                        FileOutputStream fos = new FileOutputStream("resources\\Teachers" + "\\" + teacher.getName() + ".xml");
                         XMLEncoder writer = new XMLEncoder(fos);
                         try {
                             validInput = true;
@@ -427,7 +427,7 @@ fos.close();
                         break;
                     }
                     case "9": {
-                        FileOutputStream fos = new FileOutputStream("C:\\Users\\USER\\IdeaProjects\\daneshjoyar\\resources\\Teachers" + "\\" + teacher.getName() + ".xml");
+                        FileOutputStream fos = new FileOutputStream("resources\\Teachers" + "\\" + teacher.getName() + ".xml");
                         XMLEncoder writer = new XMLEncoder(fos);
                         try {
                         validInput = true;

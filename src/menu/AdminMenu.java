@@ -55,7 +55,7 @@ public class AdminMenu {
                         valid=true;
                         System.out.println("Write teacher name");
                         String name = scanner.nextLine();
-                        Files.deleteIfExists(Path.of("C:\\Users\\USER\\IdeaProjects\\daneshjoyar\\resources\\Teachers\\" + name + ".xml"));
+                        Files.deleteIfExists(Path.of("resources\\Teachers\\" + name + ".xml"));
                         System.out.println("done!");
                         boolean V = false;
                         System.out.println("Finish? Y/N");
@@ -78,7 +78,7 @@ public class AdminMenu {
                         valid=true;
                         System.out.println("Write teacher name");
                         String name = scanner.nextLine();
-                        FileInputStream fis = new FileInputStream("C:\\Users\\USER\\IdeaProjects\\daneshjoyar\\resources\\Teachers\\" + name + ".xml");
+                        FileInputStream fis = new FileInputStream("resources\\Teachers\\" + name + ".xml");
                         XMLDecoder Reader = new XMLDecoder(fis);
                         Teacher teacher = (Teacher) Reader.readObject();
                         TeacherMenu.teachermenu(teacher);

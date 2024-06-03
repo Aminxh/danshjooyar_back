@@ -20,7 +20,7 @@ public class SigningTeacher {
         try {
             System.out.println("Enter your name");
             name = scanner.nextLine();;
-            FileInputStream fis = new FileInputStream("C:\\Users\\USER\\IdeaProjects\\daneshjoyar\\resources\\Teachers"+"\\"+name+".xml");
+            FileInputStream fis = new FileInputStream("resources\\Teachers"+"\\"+name+".xml");
             XMLDecoder Reader = new XMLDecoder(fis);
             teacher = (Teacher) Reader.readObject();
             Reader.close();
