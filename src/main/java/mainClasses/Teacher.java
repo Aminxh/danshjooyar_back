@@ -140,12 +140,14 @@ public class Teacher implements Serializable {
         if (!getCourses().get(getCourses().indexOf(course)).getStudents().contains(student)) {
             throw new StudentNotFoundException();
         }
-        for (int i = 0; i < getCourses().get(getCourses().indexOf(course)).getStudents().get(getCourses().get(getCourses().indexOf(course)).getStudents().indexOf(student)).getTerms().getLast().getStudentCourses().size(); i++) {
-            if (Objects.equals(getCourses().get(getCourses().indexOf(course)).getStudents().get(getCourses().get(getCourses().indexOf(course)).getStudents().indexOf(student)).getTerms().getLast().getStudentCourses().get(i).getName(), course.getName())) {
-                getCourses().get(getCourses().indexOf(course)).getStudents().get(getCourses().get(getCourses().indexOf(course)).getStudents().indexOf(student)).getTerms().getLast().getStudentCourses().get(i).setScore(score);
+        int lastTermIndex = getCourses().get(getCourses().indexOf(course)).getStudents().get(getCourses().get(getCourses().indexOf(course)).getStudents().indexOf(student)).getTerms().size() - 1;
+        for (int i = 0; i < getCourses().get(getCourses().indexOf(course)).getStudents().get(getCourses().get(getCourses().indexOf(course)).getStudents().indexOf(student)).getTerms().get(lastTermIndex).getStudentCourses().size(); i++) {
+            if (Objects.equals(getCourses().get(getCourses().indexOf(course)).getStudents().get(getCourses().get(getCourses().indexOf(course)).getStudents().indexOf(student)).getTerms().get(lastTermIndex).getStudentCourses().get(i).getName(), course.getName())) {
+                getCourses().get(getCourses().indexOf(course)).getStudents().get(getCourses().get(getCourses().indexOf(course)).getStudents().indexOf(student)).getTerms().get(lastTermIndex).getStudentCourses().get(i).setScore(score);
             }
         }
     }
+
     /**
      * Edits the deadline for a specific assignment in a course.
      *

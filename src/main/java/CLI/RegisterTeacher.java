@@ -1,7 +1,7 @@
 package CLI;
 
-import Main.BeheshtiUniversityField;
-import Main.Teacher;
+import mainClasses.BeheshtiUniversityField;
+import mainClasses.Teacher;
 
 import java.beans.XMLEncoder;
 import java.io.*;

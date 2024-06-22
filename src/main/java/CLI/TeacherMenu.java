@@ -1,9 +1,11 @@
 package CLI;
 
-import Main.Assignment;
-import Main.Course;
-import Main.Student;
-import Main.Teacher;
+
+import mainClasses.Assignment;
+import mainClasses.Course;
+import mainClasses.Student;
+import mainClasses.Teacher;
+
 import java.beans.XMLEncoder;
 import java.io.FileOutputStream;
 import java.io.IOException;

@@ -1,7 +1,7 @@
 
 package CLI;
 
-import Main.Teacher;
+import mainClasses.Teacher;
 
 import java.beans.XMLDecoder;
 import java.io.FileInputStream;
