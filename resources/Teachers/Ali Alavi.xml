@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="21.0.2" class="java.beans.XMLDecoder">
+ <object class="Main.Teacher" id="Teacher0">
+  <void property="PASSWORD">
+   <string>123</string>
+  </void>
+  <void property="birthDate">
+   <object class="java.util.Date">
+    <long>-27079759800000</long>
+   </object>
+  </void>
+  <void property="courses">
+   <void method="add">
+    <object class="Main.Course" id="Course0">
+     <void property="beheshtiUniversityField">
+      <object class="java.lang.Enum" id="BeheshtiUniversityField0" method="valueOf">
+       <class>Main.BeheshtiUniversityField</class>
+       <string>COMPUTER_SCIENCE</string>
+      </object>
+     </void>
+     <void property="credit">
+      <int>2</int>
+     </void>
+     <void property="name">
+      <string>AP</string>
+     </void>
+     <void property="studentCourseVersion">
+      <void method="add">
+       <object class="Main.StudentCourse" id="StudentCourse0">
+        <void property="credit">
+         <int>2</int>
+        </void>
+        <void property="name">
+         <string>AP</string>
+        </void>
+       </object>
+      </void>
+      <void method="add">
+       <object class="Main.StudentCourse" id="StudentCourse1">
+        <void property="credit">
+         <int>2</int>
+        </void>
+        <void property="name">
+         <string>AP</string>
+        </void>
+       </object>
+      </void>
+     </void>
+     <void property="students">
+      <void method="add">
+       <object class="Main.Student" id="Student0">
+        <void property="name">
+         <string>mohsen</string>
+        </void>
+        <void property="studentId">
+         <string>402243090</string>
+        </void>
+        <void id="Integer0" property="currentTerm"/>
+        <void id="ArrayList0" property="terms">
+         <void id="Term0" index="0">
+          <void property="studentCourses">
+           <void method="add">
+            <object idref="StudentCourse0"/>
+           </void>
+          </void>
+         </void>
+        </void>
+       </object>
+      </void>
+      <void method="add">
+       <object class="Main.Student" id="Student1">
+        <void property="name">
+         <string>ali</string>
+        </void>
+        <void property="studentId">
+         <string>402243091</string>
+        </void>
+        <void id="ArrayList1" property="terms">
+         <void id="Term1" index="0">
+          <void property="studentCourses">
+           <void method="add">
+            <object idref="StudentCourse1"/>
+           </void>
+          </void>
+         </void>
+        </void>
+       </object>
+      </void>
+     </void>
+     <void property="teacherName">
+      <string>Ali Alavi</string>
+     </void>
+    </object>
+   </void>
+  </void>
+  <void property="fatherName">
+   <string>a</string>
+  </void>
+  <void property="field">
+   <object idref="BeheshtiUniversityField0"/>
+  </void>
+  <void property="gender">
+   <object class="java.lang.Enum" method="valueOf">
+    <class>Main.Gender</class>
+    <string>Male</string>
+   </object>
+  </void>
+  <void property="name">
+   <string>Ali Alavi</string>
+  </void>
+  <void property="nationalId">
+   <string>1</string>
+  </void>
+ </object>
+</java>
