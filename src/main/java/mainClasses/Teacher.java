@@ -146,7 +146,6 @@ public class Teacher implements Serializable {
             }
         }
     }
-
     /**
      * Edits the deadline for a specific assignment in a course.
      *
