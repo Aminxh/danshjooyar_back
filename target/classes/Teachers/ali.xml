@@ -22,9 +22,9 @@
                         <term>
                             <avg>0.0</avg>
                             <studentCourses>
-<credit>3</credit>
-<name>ap</name>
-<score>4.0</score>
+                                <credit>3</credit>
+                                <name>ap</name>
+                                <score>4.0</score>
                             </studentCourses>
                             <termNumber>1</termNumber>
                             <totalThisTermCredit>3</totalThisTermCredit>

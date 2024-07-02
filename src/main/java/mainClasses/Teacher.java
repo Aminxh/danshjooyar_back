@@ -256,12 +256,12 @@ public class Teacher implements Serializable {
         this.courses = courses;
     }
 
-    @XmlTransient
+    @XmlElement
     public DateFormat getDateFormat() {
         return dateFormat;
     }
 
-    @XmlTransient
+    @XmlElement
     public String getPASSWORD() {
         return PASSWORD;
     }
