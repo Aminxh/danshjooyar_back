@@ -256,7 +256,7 @@ public class Teacher implements Serializable {
         this.courses = courses;
     }
 
-    @XmlElement
+    @XmlTransient
     public DateFormat getDateFormat() {
         return dateFormat;
     }
