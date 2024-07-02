@@ -47,8 +47,9 @@ public class LoginHandler implements Runnable{
             }
         }
 
-        userVerfier.writeUTF(studentExist.toString());
+        userVerfier.writeUTF("false");
         userVerfier.flush();
+        System.out.println("false sent");
         }
         catch(Exception e){
 

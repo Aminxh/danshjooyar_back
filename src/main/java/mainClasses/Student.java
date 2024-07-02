@@ -39,6 +39,7 @@ public class Student implements Serializable {
     public Student(String name, String studentId) {
         this.name = name;
         this.StudentId = studentId;
+        this.PASSWORD = studentId;
     }
 
     public Student() {
@@ -235,7 +236,7 @@ public class Student implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    @XmlTransient
+    @XmlElement
     public String getPASSWORD() {
         return PASSWORD;
     }
