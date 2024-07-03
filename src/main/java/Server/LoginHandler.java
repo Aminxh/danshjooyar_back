@@ -1,5 +1,6 @@
 package Server;
 
+
 import mainClasses.Course;
 import mainClasses.Student;
 import mainClasses.Teacher;
@@ -24,8 +25,17 @@ public class LoginHandler implements Runnable{
         try{
         DataInputStream inputUserInfo = new DataInputStream(socketForDisDos.getInputStream());
         DataOutputStream userVerfier = new DataOutputStream(socketForDisDos.getOutputStream());
-        String userData = inputUserInfo.readUTF(); //USERNAME-|-PASSWORDS
-        String[] userDataSplitted = userData.split("-|-");
+        System.out.println("in LoginHandeler");
+            StringBuilder userData = new StringBuilder();
+            int index = inputUserInfo.read();
+            while (index != 0) {
+                userData.append((char) index);
+                index = inputUserInfo.read();
+            System.out.println(index);
+            }
+            //USERNAME-|-PASSWORDS
+            System.out.println(userData);
+        String[] userDataSplitted = userData.toString().split("~");
         Boolean studentExist = false ;
         File xmls = new File("src/main/resources/Teachers");
         File[] list_of_xmls = xmls.listFiles();
@@ -41,15 +51,20 @@ public class LoginHandler implements Runnable{
                 ArrayList<Student> studentsList = coursesOfTeacher.get(j).getStudents();
                 for (int k=0 ; k < studentsList.size() ; k++)
                 {
-                    if (studentsList.get(i).getName().equals(userDataSplitted[0]) && studentsList.get(i).getPASSWORD().equals(userDataSplitted[1]))
+                    System.out.println("xxxxx");
+                    System.out.println(studentsList.get(k).getName()+" "+studentsList.get(k).getPASSWORD());
+                    if (studentsList.get(k).getName().equals(userDataSplitted[0]) && studentsList.get(k).getPASSWORD().equals(userDataSplitted[1]))
                         studentExist = true ;
                 }
             }
         }
 
-        userVerfier.writeUTF("false");
+        userVerfier.writeBytes("true");
         userVerfier.flush();
-        System.out.println("false sent");
+        userVerfier.close();
+        inputUserInfo.close();
+        socketForDisDos.close();
+            System.out.println(studentExist);
         }
         catch(Exception e){
 
