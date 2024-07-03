@@ -6,6 +6,7 @@ import mainClasses.Teacher;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -94,17 +95,22 @@ class RequestHandler extends Thread {
         System.out.println("ready");
         String command = listener();
         System.out.println("command is: " + command);
-        String[] split = command.split("~");
-        switch (split[0]){
+        String[] splited = command.split("~");
+        switch (splited[0]){
             case "LOGIN":
                 try {
-                    Loginpage(split[1],split[2]);
+                    Loginpage(splited[1],splited[2]);
                 } catch (JAXBException e) {
                     throw new RuntimeException(e);
                 }
                 break;
             case "SIGNUP":
-                signuppage();
+                try {
+                signuppage(splited[1],splited[2],splited[3]);
+                } catch (JAXBException e)
+                {
+                    throw new RuntimeException(e) ;
+                }
                 break;
             case "EDITACCOUNT":
                 //TODO
@@ -148,7 +154,38 @@ class RequestHandler extends Thread {
             writer(studentExist.toString());
         }
     }
-    void signuppage(){
+    void signuppage(String username ,String studentID ,String password) throws JAXBException {
+        boolean studentIsRepetitive = false ;
+        JAXBContext context = JAXBContext.newInstance(Student.class);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+
+        File xmls = new File("src/main/resources/Students");
+        File[] list_of_xmls = xmls.listFiles();
+        for (int i = 0 ; i < list_of_xmls.length ; i++)
+        {
+            Student checker = (Student) unmarshaller.unmarshal(list_of_xmls[i]);
+            if (checker.getStudentId().equals(studentID) || checker.getName().equals(username))
+                studentIsRepetitive = true ;
+        }
+
+        if (studentIsRepetitive)
+        {
+            writer("repetitive");
+        }
+
+        else if (!studentIsRepetitive)
+        {
+            Student newStudent = new Student();
+            newStudent.setName(username);
+            newStudent.setStudentId(studentID);
+            newStudent.setPASSWORD(password);
+            File newStudentFile = new File("src/main/resources/Students" + "/" + studentID + ".xml");
+            JAXBContext context2 = JAXBContext.newInstance(Student.class);
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            marshaller.marshal(newStudent, newStudentFile);
+            writer("not repetitive");
+        }
 
     }
 }
