@@ -1,36 +1,38 @@
 package Menus;
 
-import mainClasses.Assignment;
-import mainClasses.Course;
-import mainClasses.Student;
-import mainClasses.Teacher;
+import mainClasses.*;
 
 import javax.xml.bind.*;
 import java.beans.XMLEncoder;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class TeacherMenu {
     static void teachermenu(Teacher teacher) throws IOException, InterruptedException, JAXBException {
-        File outputFile = new File("src/main/resources/Teachers" + "\\" + teacher.getName() + ".xml");
+        File TeachersFile = new File("src/main/resources/Teachers" + "\\" + teacher.getName() + ".xml");
         boolean finish = false;
         while (!finish) {
 
-            System.out.println("1-Add course");
-            System.out.println("2-Remove course");
-            System.out.println("3-Add student");
-            System.out.println("4-Remove student");
+            System.out.println("1-Add course");//ok
+            System.out.println("2-Remove course");//ok
+            System.out.println("3-Add student");//ok
+            System.out.println("4-Remove student");//ok
             System.out.println("5-Add Assignment");
             System.out.println("6-Remove Assignment");
             System.out.println("7-Grading");
             System.out.println("8-DeadLine Edit");
             System.out.println("9-Active Assignment");
             Scanner scanner = new Scanner(System.in);
-
+            ;
+            ArrayList<Student> StudentsInTeacherXML = new ArrayList<>();
+            for (int i = 0; i < teacher.getCourses().size(); i++) {
+                StudentsInTeacherXML.addAll(teacher.getCourses().get(i).getStudents());
+            }
             boolean validInput = false;
             while (!validInput) {
                 String input = scanner.nextLine();
@@ -47,7 +49,7 @@ public class TeacherMenu {
                         JAXBContext context = JAXBContext.newInstance(Teacher.class);
                         Marshaller marshaller = context.createMarshaller();
                         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-                        marshaller.marshal(teacher, outputFile);
+                        marshaller.marshal(teacher, TeachersFile);
                         System.out.println("done!");
                         Thread.sleep(1000);
                         System.out.println("\033[H\033[2J");
@@ -94,7 +96,7 @@ public class TeacherMenu {
                             JAXBContext context = JAXBContext.newInstance(Teacher.class);
                             Marshaller marshaller = context.createMarshaller();
                             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-                            marshaller.marshal(teacher, outputFile);
+                            marshaller.marshal(teacher, TeachersFile);
 
                         }
                         boolean V = false;
@@ -121,6 +123,9 @@ public class TeacherMenu {
                     case "3": {
 
                         try {
+                            JAXBContext context = JAXBContext.newInstance(Student.class);
+                            Marshaller marshaller = context.createMarshaller();
+                            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
                             validInput = true;
                             System.out.println("First Enter Course Then " + "Enter new students number" + " then their name and studentID (name-StudentID)");
                             String courseName = scanner.nextLine();
@@ -130,7 +135,12 @@ public class TeacherMenu {
                                 String[] detail = scanner.nextLine().split("-");
                                 Course course = new Course(courseName);
                                 teacher.AddStudent(course, new Student(detail[0], detail[1]));
+                                File StudentFile = new File("src/main/resources/Students" + "\\" + detail[1] + ".xml");
+                                Student student =new Student(detail[0], detail[1]);
+                                student.addCourse(course);
+                                marshaller.marshal(student, StudentFile);
                             }
+
                             System.out.println("done!");
                             Thread.sleep(1000);
                             System.out.println("\033[H\033[2J");
@@ -142,7 +152,7 @@ public class TeacherMenu {
                             JAXBContext context = JAXBContext.newInstance(Teacher.class);
                             Marshaller marshaller = context.createMarshaller();
                             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-                            marshaller.marshal(teacher, outputFile);
+                            marshaller.marshal(teacher, TeachersFile);
                         }
                         boolean V = false;
                         System.out.println("Finish? Y/N");
@@ -191,7 +201,7 @@ public class TeacherMenu {
                             JAXBContext context = JAXBContext.newInstance(Teacher.class);
                             Marshaller marshaller = context.createMarshaller();
                             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-                            marshaller.marshal(teacher, outputFile);
+                            marshaller.marshal(teacher, TeachersFile);
                         }
                         boolean V = false;
                         System.out.println("Finish? Y/N");
@@ -217,6 +227,9 @@ public class TeacherMenu {
                     case "5": {
 
                         try {
+                            JAXBContext context = JAXBContext.newInstance(Student.class);
+                            Marshaller marshaller = context.createMarshaller();
+                            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
                             validInput = true;
                             System.out.println("Enter Course Name");
                             String courseName = scanner.nextLine();
@@ -230,6 +243,9 @@ public class TeacherMenu {
                             while (!valid) {
                                 if (Objects.equals(YN, "Y")) {
                                     teacher.AddAssignment(new Course(courseName), new Assignment(subject, new Date(stringdate), true));
+                                    for (int i = 0; i < StudentsInTeacherXML.size(); i++) {
+
+                                    }
                                     valid = true;
                                 } else if (Objects.equals(YN, "N")) {
                                     teacher.AddAssignment(new Course(courseName), new Assignment(subject, new Date(stringdate), false));
@@ -237,6 +253,7 @@ public class TeacherMenu {
                                 } else {
                                     System.out.println("choose Y or N");
                                 }
+
                             }
                             System.out.println("done!");
                             Thread.sleep(1000);
@@ -249,7 +266,7 @@ public class TeacherMenu {
                             JAXBContext context = JAXBContext.newInstance(Teacher.class);
                             Marshaller marshaller = context.createMarshaller();
                             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-                            marshaller.marshal(teacher, outputFile);
+                            marshaller.marshal(teacher, TeachersFile);
                         }
                         boolean V = false;
                         System.out.println("Finish? Y/N");
@@ -290,7 +307,7 @@ public class TeacherMenu {
                             JAXBContext context = JAXBContext.newInstance(Teacher.class);
                             Marshaller marshaller = context.createMarshaller();
                             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-                            marshaller.marshal(teacher, outputFile);
+                            marshaller.marshal(teacher, TeachersFile);
                         }
                         System.out.println("done!");
                         Thread.sleep(1000);
@@ -320,17 +337,44 @@ public class TeacherMenu {
                     case "7": {
 
                         try {
+                            File xmls = new File("src/main/resources/Students");
+                            File[] list_of_xmls = xmls.listFiles();
                             validInput = true;
                             System.out.println("Enter course name");
                             String name = scanner.nextLine();
                             System.out.println("Enter Course Credit");
                             String credit = scanner.nextLine();
                             System.out.println("First Enter Name and ID then Score(name-ID-Score) ");
-                            for (int i = 0; i < teacher.getCourses().get(teacher.getCourses().indexOf(new Course(name,Integer.parseInt(credit)))).getStudents().size(); i++) {
-                                String[] detail = scanner.nextLine().split("-");
-                               double score= Double.parseDouble(detail[2]);
-                                teacher.Score(new Course(name,Integer.parseInt(credit)), new Student(detail[0], detail[1]), score);
+
+                                String[] detail = scanner.nextLine().split("-"); //studentName-studentID-score
+                                double score = Double.parseDouble(detail[2]);
+                                teacher.Score(new Course(name, Integer.parseInt(credit)), new Student(detail[0], detail[1]), score);
+
+                                JAXBContext context = JAXBContext.newInstance(Student.class);
+                                Unmarshaller unmarshaller = context.createUnmarshaller();
+                            Student studentChecker = null;
+                            for (int i = 0; i < list_of_xmls.length ; i++) {
+                                JAXBContext undefindStudent = JAXBContext.newInstance(Student.class);
+                                Unmarshaller un = undefindStudent.createUnmarshaller();
+                                Student checker = (Student) un.unmarshal(list_of_xmls[i]);
+                                if (detail[0].equals(checker.getName()))
+                                 studentChecker = checker;
+
                             }
+                                    ArrayList<StudentCourse> studentChekerCourses = studentChecker.getTerms().get(studentChecker.getTerms().size() - 1).getStudentCourses();
+                                    for (int j = 0; j < studentChekerCourses.size(); j++) {
+                                        if (studentChekerCourses.get(j).getName().equals(name)) {
+                                            studentChekerCourses.get(j).setScore(Double.parseDouble(detail[2]));
+//                                            studentChecker.getTerms().get(studentChecker.getTerms().size() - 1).getStudentCourses().get(j).setScore(Double.parseDouble(detail[2]));
+                                            File StudentFile = new File("src/main/resources/Students" + "/" + detail[1] + ".xml");
+
+                                            JAXBContext editedVersion = JAXBContext.newInstance(Student.class);
+                                            Marshaller marshaller2 = editedVersion.createMarshaller();
+                                            marshaller2.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+                                            marshaller2.marshal(studentChecker, StudentFile);
+                                        }
+                                    }
+
                             System.out.println("done!");
                             Thread.sleep(1000);
                             System.out.println("\033[H\033[2J");
@@ -342,7 +386,7 @@ public class TeacherMenu {
                             JAXBContext context = JAXBContext.newInstance(Teacher.class);
                             Marshaller marshaller = context.createMarshaller();
                             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-                            marshaller.marshal(teacher, outputFile);
+                            marshaller.marshal(teacher, TeachersFile);
                         }
 
                         boolean V = false;
@@ -389,7 +433,7 @@ public class TeacherMenu {
                             JAXBContext context = JAXBContext.newInstance(Teacher.class);
                             Marshaller marshaller = context.createMarshaller();
                             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-                            marshaller.marshal(teacher, outputFile);
+                            marshaller.marshal(teacher, TeachersFile);
                         }
                         boolean V = false;
                         System.out.println("Finish? Y/N");
@@ -433,7 +477,7 @@ public class TeacherMenu {
                             JAXBContext context = JAXBContext.newInstance(Teacher.class);
                             Marshaller marshaller = context.createMarshaller();
                             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-                            marshaller.marshal(teacher, outputFile);
+                            marshaller.marshal(teacher, TeachersFile);
                         }
 
                         boolean V = false;

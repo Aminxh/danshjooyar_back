@@ -32,6 +32,7 @@ public class Student implements Serializable {
     private double currentAverage = 0;
     private int totalPassedCredit = 0;
 
+
     {
         terms.add(new Term(1));
     }
@@ -68,8 +69,7 @@ public class Student implements Serializable {
         return dateFormat;
     }
 
-    @XmlElementWrapper(name = "terms")
-    @XmlElement(name = "term")
+    @XmlElement()
     public ArrayList<Term> getTerms() {
         return terms;
     }

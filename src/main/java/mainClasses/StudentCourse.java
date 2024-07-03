@@ -49,7 +49,7 @@ public class StudentCourse implements Serializable {
     }
 
     @XmlElement
-    public Double getScore() {
+    public double getScore() {
         return score;
     }
 
