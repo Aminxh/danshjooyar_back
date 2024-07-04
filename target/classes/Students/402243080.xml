@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<student>
+    <currentAverage>0.0</currentAverage>
+    <currentTerm>0</currentTerm>
+    <name>AliVahdati</name>
+    <PASSWORD>12345678</PASSWORD>
+    <studentId>402243080</studentId>
+    <terms>
+        <term>
+            <avg>0.0</avg>
+            <termNumber>1</termNumber>
+            <totalThisTermCredit>0</totalThisTermCredit>
+        </term>
+    </terms>
+    <totalAverage>0.0</totalAverage>
+    <totalPassedCredit>0</totalPassedCredit>
+</student>
