@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<student>
+    <currentAverage>0.0</currentAverage>
+    <currentTerm>0</currentTerm>
+    <name>ali</name>
+    <PASSWORD>1234</PASSWORD>
+    <studentId>1234</studentId>
+    <terms>
+        <avg>0.0</avg>
+        <studentCourses>
+            <credit>0</credit>
+            <name>ap</name>
+            <score>9.0</score>
+        </studentCourses>
+        <termNumber>1</termNumber>
+        <totalThisTermCredit>0</totalThisTermCredit>
+    </terms>
+    <totalAverage>0.0</totalAverage>
+    <totalPassedCredit>0</totalPassedCredit>
+</student>
