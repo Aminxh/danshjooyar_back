@@ -124,7 +124,7 @@ class RequestHandler extends Thread {
                 break;
             case "ASSIGNMENTS":
                 try {
-                    assignmentPage(splited[1],splited[2]);
+                    assignmentPage(splited[1]);
                 } catch (JAXBException e) {
                     throw new RuntimeException(e);
                 }
@@ -190,7 +190,7 @@ class RequestHandler extends Thread {
         }
 
     }
-    private void assignmentPage(String username,String studentid) throws JAXBException {
+    private void assignmentPage(String username) throws JAXBException {
         ArrayList<Assignment> result=new ArrayList<>();
 
         JAXBContext context = JAXBContext.newInstance(Teacher.class);
@@ -202,11 +202,11 @@ class RequestHandler extends Thread {
         {
             Teacher checker = (Teacher) unmarshaller.unmarshal(list_of_xmls[i]);
             for (int j = 0; j < checker.getCourses().size(); j++) {
-                if (checker.getCourses().get(j).getStudents().contains(new Student(username,studentid))){
+                for (int k = 0; k < checker.getCourses().get(j).getStudents().size(); k++) {
+                    if(checker.getCourses().get(j).getStudents().get(k).getName().equals(username))
                     result.addAll(checker.getCourses().get(j).getActiveAssignments());
                 }
             }
-
         }
         StringBuilder stringBuilder=new StringBuilder();
         for (int i = 0; i < result.size(); i++) {
