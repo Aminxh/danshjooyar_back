@@ -1,5 +1,6 @@
 package Server;
 
+import mainClasses.Assignment;
 import mainClasses.Course;
 import mainClasses.Student;
 import mainClasses.Teacher;
@@ -118,41 +119,42 @@ class RequestHandler extends Thread {
             case "CHANGEPASSWORD":
                 //TODO
                 break;
-            case "ADDCLASS":
+            case "CLASSA":
                 //TODO
                 break;
-            case "GETOBJECT":
+            case "ASSIGNMENTS":
+                try {
+                    assignmentPage(splited[1],splited[2]);
+                } catch (JAXBException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            case "SARA":
                 //TODO
                 break;
-            case "ISLOGIN":
+            case "DELETEACCOUNT":
                 //TODO
                 break;
         }
     }
+
+
     void Loginpage(String username,String password) throws JAXBException {
         Boolean studentExist = false ;
-        File xmls = new File("src/main/resources/Teachers");
+        File xmls = new File("src/main/resources/Students");
         File[] list_of_xmls = xmls.listFiles();
 
         for(int i=0 ; i < list_of_xmls.length ; i++)
         {
-            JAXBContext context = JAXBContext.newInstance(Teacher.class);
+            JAXBContext context = JAXBContext.newInstance(Student.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
-            Teacher checker = (Teacher) unmarshaller.unmarshal(list_of_xmls[i]);
-            ArrayList<Course> coursesOfTeacher = checker.getCourses();
-            for (int j=0 ; j < coursesOfTeacher.size() ; j++)
+            Student checker = (Student) unmarshaller.unmarshal(list_of_xmls[i]);
+            if (checker.getName().equals(username) && checker.getPASSWORD().equals(password))
             {
-                ArrayList<Student> studentsList = coursesOfTeacher.get(j).getStudents();
-                for (int k=0 ; k < studentsList.size() ; k++)
-                {
-                    System.out.println("xxxxx");
-                    System.out.println(studentsList.get(k).getName()+" "+studentsList.get(k).getPASSWORD());
-                    if (studentsList.get(k).getName().equals(username) && studentsList.get(k).getPASSWORD().equals(password))
-                        studentExist = true ;
-                }
+            studentExist = true ;
             }
-            writer(studentExist.toString());
         }
+            writer(studentExist.toString());
     }
     void signuppage(String username ,String studentID ,String password) throws JAXBException {
         boolean studentIsRepetitive = false ;
@@ -187,5 +189,46 @@ class RequestHandler extends Thread {
             writer("not repetitive");
         }
 
+    }
+    private void assignmentPage(String username,String studentid) throws JAXBException {
+        ArrayList<Assignment> result=new ArrayList<>();
+
+        JAXBContext context = JAXBContext.newInstance(Teacher.class);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+
+        File xmls = new File("src/main/resources/Teachers");
+        File[] list_of_xmls = xmls.listFiles();
+        for (int i = 0 ; i < list_of_xmls.length ; i++)
+        {
+            Teacher checker = (Teacher) unmarshaller.unmarshal(list_of_xmls[i]);
+            for (int j = 0; j < checker.getCourses().size(); j++) {
+                if (checker.getCourses().get(j).getStudents().contains(new Student(username,studentid))){
+                    result.addAll(checker.getCourses().get(j).getActiveAssignments());
+                }
+            }
+
+        }
+        StringBuilder stringBuilder=new StringBuilder();
+        for (int i = 0; i < result.size(); i++) {
+            if (i== result.size()-1){
+                stringBuilder.append(result.get(i).getSubject());
+                stringBuilder.append("~");
+                stringBuilder.append(result.get(i).getDeadLine());
+                stringBuilder.append("~");
+                stringBuilder.append(result.get(i).getDescription()
+                );
+            }
+            else {
+                stringBuilder.append(result.get(i).getSubject());
+                stringBuilder.append("~");
+                stringBuilder.append(result.get(i).getDeadLine());
+                stringBuilder.append("~");
+                stringBuilder.append(result.get(i).getDescription());
+                stringBuilder.append("~");
+
+            }
+        }
+        System.out.println(stringBuilder.toString());
+        writer(stringBuilder.toString());
     }
 }

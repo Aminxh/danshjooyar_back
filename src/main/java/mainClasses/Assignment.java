@@ -16,6 +16,8 @@ import java.util.Objects;
  */
 @XmlRootElement
 public class Assignment implements Serializable {
+
+    private  String description;
     private String subject; // The subject of the assignment
     private final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd "); // Date format for deadlines
     private Date deadLine; // The deadline for completing the assignment
@@ -30,10 +32,10 @@ public class Assignment implements Serializable {
         this.subject = subject;
     }
 
-    public Assignment(String subject, Date deadLine, boolean active) {
+    public Assignment(String subject, Date deadLine, String description) {
         this.subject = subject;
         this.deadLine = deadLine;
-        Active = active;
+        this.description=description;
     }
 
     public Assignment() {
@@ -92,5 +94,12 @@ public class Assignment implements Serializable {
                 ", deadLine=" + deadLine +
                 ", Active=" + Active +
                 '}';
+    }
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
