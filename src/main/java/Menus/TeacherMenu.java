@@ -239,22 +239,16 @@ public class TeacherMenu {
                             String stringdate = scanner.nextLine();
                             System.out.println("Do you want to Active it ? Y/N");
                             String YN = scanner.nextLine();
-                            System.out.println("description:");
-                            String description=scanner.nextLine();
                             boolean valid = false;
                             while (!valid) {
                                 if (Objects.equals(YN, "Y")) {
-                                    Assignment assignment=new Assignment(subject, new Date(stringdate),description );
-                                    assignment.setActive(true);
-                                    teacher.AddAssignment(new Course(courseName), assignment);
-                                    teacher.AssignmentActivator(new Course(courseName),assignment);
+                                    teacher.AddAssignment(new Course(courseName), new Assignment(subject, new Date(stringdate), true));
+                                    for (int i = 0; i < StudentsInTeacherXML.size(); i++) {
 
-
+                                    }
                                     valid = true;
                                 } else if (Objects.equals(YN, "N")) {
-                                    Assignment assignment=new Assignment(subject, new Date(stringdate),description );
-
-                                    teacher.AddAssignment(new Course(courseName), assignment);
+                                    teacher.AddAssignment(new Course(courseName), new Assignment(subject, new Date(stringdate), false));
                                     valid = true;
                                 } else {
                                     System.out.println("choose Y or N");
