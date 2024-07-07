@@ -180,9 +180,9 @@ public class Teacher implements Serializable {
         if (!courses.contains(course)) {
             throw new CourseNotFoundException();
         }
-        if (!course.getAllAssignments().contains(assignment)) {
-            throw new AssignmentNotFoundException();
-        }
+//        if (!course.getAllAssignments().contains(assignment)) {
+//            throw new AssignmentNotFoundException();
+//        }
         courses.get(courses.indexOf(course)).getAllAssignments().get(courses.get(courses.indexOf(course)).getAllAssignments().indexOf(assignment)).setActive(true);
         courses.get(courses.indexOf(course)).getActiveAssignments().add(assignment);
     }

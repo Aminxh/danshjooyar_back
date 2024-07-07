@@ -89,10 +89,12 @@ public class Student implements Serializable {
 
     @XmlElement
     public int getTotalPassedCredit() {
+        int totalCredits = 0;
         for (Term term : terms) {
-            totalPassedCredit += term.getTotalThisTermCredit();
+            int termCredits = term.getTotalThisTermCredit();
+            totalCredits += termCredits;
         }
-        return totalPassedCredit;
+        return totalCredits;
     }
 
     public void setTotalPassedCredit(int totalPassedCredit) {
@@ -182,12 +184,15 @@ public class Student implements Serializable {
         return terms.get(currentTerm - 1).getTotalThisTermCredit();
     }
 
-    public double termAvgDetail(int term) {
-        if (terms.size() < term) {
-            throw new TermNotFoundException();
-        }
-        return terms.get(term - 1).avgCalculate();
+
+public double termAvgDetail(int term) {
+    if (terms.size() < term) {
+        throw new TermNotFoundException();
     }
+    Term specifiedTerm = terms.get(term - 1);
+    double avg = specifiedTerm.avgCalculate();
+    return avg;
+}
 
     public double termAvgDetail() {
         return terms.get(currentTerm - 1).avgCalculate();
@@ -198,16 +203,24 @@ public class Student implements Serializable {
         terms.add(new Term(currentTerm));
     }
 
-    public double totalAvg() {
-        double sum = 0;
-        for (Term term : terms) {
-            for (StudentCourse course : term.getStudentCourses()) {
-                sum += course.getScore() * course.getCredit();
-            }
+public double totalAvg() {
+    double sum = 0;
+    int totalCredits = getTotalPassedCredit();
+
+    System.out.println("Debug: Calculating total average");
+    for (Term term : terms) {
+        for (StudentCourse course : term.getStudentCourses()) {
+            sum += course.getScore() * course.getCredit();
         }
-        totalAverage = sum / getTotalPassedCredit();
-        return totalAverage;
     }
+
+    if (totalCredits == 0) {
+        return 0;
+    }
+
+    totalAverage = sum / totalCredits;
+    return totalAverage;
+}
 
     public void AllCoursePrinter() {
         for (Term term : terms) {

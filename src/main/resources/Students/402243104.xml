@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<student>
+    <currentAverage>0.0</currentAverage>
+    <currentTerm>0</currentTerm>
+    <name>Ahmad</name>
+    <PASSWORD>HH11q!ss</PASSWORD>
+    <studentId>402243104</studentId>
+    <terms>
+        <avg>0.0</avg>
+        <studentCourses>
+            <credit>3</credit>
+            <name>AP</name>
+            <score>0.0</score>
+        </studentCourses>
+        <studentCourses>
+            <credit>4</credit>
+            <name>Software Engineering</name>
+            <score>0.0</score>
+        </studentCourses>
+        <studentCourses>
+            <credit>4</credit>
+            <name>Software Engineering</name>
+            <score>0.0</score>
+        </studentCourses>
+        <termNumber>1</termNumber>
+        <totalThisTermCredit>11</totalThisTermCredit>
+    </terms>
+    <totalAverage>0.0</totalAverage>
+    <totalPassedCredit>11</totalPassedCredit>
+</student>

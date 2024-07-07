@@ -250,6 +250,7 @@ class RequestHandler extends Thread {
         showtasks(username);
     }
     //****************************************************************
+
     private void showdetail(String username) throws JAXBException {
         List<Double> result = new ArrayList<>();
 
@@ -262,22 +263,28 @@ class RequestHandler extends Thread {
             for (File studentFile : studentFiles) {
                 Student student = (Student) studentUnmarshaller.unmarshal(studentFile);
                 if (student.getName().equals(username)) {
-                    result.add((double) student.getTerms().stream()
-                            .flatMap(x -> x.getStudentCourses().stream()).count());
-                    System.out.println(result.get(0));
-                    student.getTerms().stream()
-                            .flatMap(x -> x.getStudentCourses().stream())
-                            .map(x -> x.getScore())
-                            .max(Double::compareTo)
-                            .ifPresent(result::add);
+                    long courseCount = student.getTerms().stream()
+                            .flatMap(term -> term.getStudentCourses().stream())
+                            .count();
+                    result.add((double) courseCount);
 
-                    System.out.println(result.get(1));
-                    student.getTerms().stream()
-                            .flatMap(x -> x.getStudentCourses().stream())
-                            .map(x -> x.getScore())
-                            .min(Double::compareTo)
-                            .ifPresent(result::add);
-                    System.out.println(result.get(2));
+                    if (courseCount > 0) {
+                        OptionalDouble maxScore = student.getTerms().stream()
+                                .flatMap(term -> term.getStudentCourses().stream())
+                                .mapToDouble(StudentCourse::getScore)
+                                .max();
+
+                        OptionalDouble minScore = student.getTerms().stream()
+                                .flatMap(term -> term.getStudentCourses().stream())
+                                .mapToDouble(StudentCourse::getScore)
+                                .min();
+
+                        result.add(maxScore.orElse(0.0));
+                        result.add(minScore.orElse(0.0));
+                    } else {
+                        result.add(0.0);
+                        result.add(0.0);
+                    }
                     break;
                 }
             }
@@ -304,8 +311,10 @@ class RequestHandler extends Thread {
             }
             result.add((double) totalAssignments);
             result.add((double) totalActiveAssignments);
+        } else {
+            result.add(0.0);
+            result.add(0.0);
         }
-
 
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < result.size(); i++) {
@@ -318,6 +327,8 @@ class RequestHandler extends Thread {
         System.out.println(stringBuilder.toString());
         writer(stringBuilder.toString());
     }
+
+
     //****************************************************************
     private void addclass(String username, String teacher, String course) throws JAXBException {
         File studentsFolder = new File("src/main/resources/Students");
@@ -485,6 +496,11 @@ class RequestHandler extends Thread {
             Student checker = (Student) unmarshaller.unmarshal(list_of_xmls[i]);
             if (checker.getName().equals(username)) {
                 checker.setPASSWORD(password);
+                File studentFile = new File("src/main/resources/Students" + "/" + checker.getStudentId() + ".xml");
+                JAXBContext editedVersion = JAXBContext.newInstance(Student.class);
+                Marshaller marshaller2 = editedVersion.createMarshaller();
+                marshaller2.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,true);
+                marshaller2.marshal(checker,studentFile);
             }
         }
 
@@ -592,6 +608,9 @@ class RequestHandler extends Thread {
 
         File finialDelete = new File("src/main/resources/Students" + "/" + studentID + ".xml");
         finialDelete.delete();
+        File file =new File("src/main/resources/Tasks"+username+".txt");
+        file.delete();
+        writer("");
     }
     //****************************************************************
     void editAccount(String username ,String birthday ,String fatherName ,String nationalID ,String phone ,String fieldOfStudy) throws JAXBException, ParseException {
@@ -618,5 +637,7 @@ class RequestHandler extends Thread {
                 marshaller2.marshal(checker, StudentFile);
             }
         }
+        writer("success");
     }
+
 }
