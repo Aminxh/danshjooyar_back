@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <teacher>
-    <birthDate>1111-11-04T00:00:00+03:30</birthDate>
+    <birthDate>1111-10-21T00:00:00+03:30</birthDate>
     <courses>
         <course>
-
-
             <activeAssignments>
                 <assignment active="true">
-                <deadLine>2020-02-08T00:00:00+03:30</deadLine>
-                <description>in tamrin aval hast</description>
-                <subject>tamrin1</subject>
+                    <deadLine>2020-02-08T00:00:00+03:30</deadLine>
+                    <description>in tamrin aval hast</description>
+                    <subject>tamrin1</subject>
                 </assignment>
             </activeAssignments>
             <allAssignments>
@@ -40,7 +38,66 @@
                         <totalThisTermCredit>3</totalThisTermCredit>
                     </terms>
                     <totalAverage>0.0</totalAverage>
-                    <totalPassedCredit>9</totalPassedCredit>
+                    <totalPassedCredit>15</totalPassedCredit>
+                </student>
+            </students>
+            <teacherName>sadegh</teacherName>
+        </course>
+        <course>
+            <activeAssignments/>
+            <allAssignments/>
+            <beheshtiUniversityField>AGRICULTURE_FORESTRY</beheshtiUniversityField>
+            <credit>2</credit>
+            <name>bp</name>
+            <students>
+                <student>
+                    <currentAverage>0.0</currentAverage>
+                    <currentTerm>0</currentTerm>
+                    <name>ali</name>
+                    <PASSWORD>1234</PASSWORD>
+                    <studentId>1234</studentId>
+                    <terms>
+                        <avg>0.0</avg>
+                        <studentCourses>
+                            <credit>0</credit>
+                            <name>ap</name>
+                            <score>9.0</score>
+                        </studentCourses>
+                        <studentCourses>
+                            <credit>2</credit>
+                            <name>bp</name>
+                            <score>0.0</score>
+                        </studentCourses>
+                        <studentCourses>
+                            <credit>2</credit>
+                            <name>bp</name>
+                            <score>0.0</score>
+                        </studentCourses>
+                        <studentCourses>
+                            <credit>2</credit>
+                            <name>bp</name>
+                            <score>0.0</score>
+                        </studentCourses>
+                        <studentCourses>
+                            <credit>2</credit>
+                            <name>bp</name>
+                            <score>0.0</score>
+                        </studentCourses>
+                        <studentCourses>
+                            <credit>2</credit>
+                            <name>bp</name>
+                            <score>0.0</score>
+                        </studentCourses>
+                        <studentCourses>
+                            <credit>2</credit>
+                            <name>bp</name>
+                            <score>0.0</score>
+                        </studentCourses>
+                        <termNumber>1</termNumber>
+                        <totalThisTermCredit>12</totalThisTermCredit>
+                    </terms>
+                    <totalAverage>0.0</totalAverage>
+                    <totalPassedCredit>36</totalPassedCredit>
                 </student>
             </students>
             <teacherName>sadegh</teacherName>

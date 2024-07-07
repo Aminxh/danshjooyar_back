@@ -12,9 +12,39 @@
             <name>ap</name>
             <score>9.0</score>
         </studentCourses>
+        <studentCourses>
+            <credit>2</credit>
+            <name>bp</name>
+            <score>0.0</score>
+        </studentCourses>
+        <studentCourses>
+            <credit>2</credit>
+            <name>bp</name>
+            <score>0.0</score>
+        </studentCourses>
+        <studentCourses>
+            <credit>2</credit>
+            <name>bp</name>
+            <score>0.0</score>
+        </studentCourses>
+        <studentCourses>
+            <credit>2</credit>
+            <name>bp</name>
+            <score>0.0</score>
+        </studentCourses>
+        <studentCourses>
+            <credit>2</credit>
+            <name>bp</name>
+            <score>0.0</score>
+        </studentCourses>
+        <studentCourses>
+            <credit>2</credit>
+            <name>bp</name>
+            <score>0.0</score>
+        </studentCourses>
         <termNumber>1</termNumber>
-        <totalThisTermCredit>0</totalThisTermCredit>
+        <totalThisTermCredit>12</totalThisTermCredit>
     </terms>
     <totalAverage>0.0</totalAverage>
-    <totalPassedCredit>0</totalPassedCredit>
+    <totalPassedCredit>24</totalPassedCredit>
 </student>

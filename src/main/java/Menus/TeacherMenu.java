@@ -128,6 +128,8 @@ public class TeacherMenu {
                                 Student student =new Student(detail[0], detail[1]);
                                 student.addCourse(course);
                                 marshaller.marshal(student, StudentFile);
+                                File file = new File("src/main/resources/Tasks/"+detail[1]+".txt");
+
                             }
                             System.out.println("done!");
                             Thread.sleep(1000);
