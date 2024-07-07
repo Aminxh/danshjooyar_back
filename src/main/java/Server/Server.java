@@ -9,6 +9,8 @@ import javax.xml.bind.Unmarshaller;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -110,8 +112,13 @@ class RequestHandler extends Thread {
                 }
                 break;
 //-------------------------------------------------------------------------------
-            case "EDITACCOUNT":
-                //TODO
+            case "EDITACCOUNT": //username~birthday~fatherName~nationalID~phone~fieldOfStudy
+                try {
+                    editAccount(splited[1],splited[2],splited[3],splited[4],splited[5],splited[6]);
+                } catch (Exception e)
+                {
+                    throw new RuntimeException(e) ;
+                }
                 break;
 //-------------------------------------------------------------------------------
             case "ASSIGNMENTS":
@@ -183,7 +190,23 @@ class RequestHandler extends Thread {
                 break;
 //-------------------------------------------------------------------------------
             case "DELETEACCOUNT":
-                //TODO
+                try {
+                    deleteAccount(splited[1]);
+                } catch (JAXBException e)
+                {
+                    throw new RuntimeException(e) ;
+                }
+                break;
+//-------------------------------------------------------------------------------
+            case "PROFILE":
+                try {
+                    initProfileData(splited[1]);
+                } catch (JAXBException e)
+                {
+                    throw new RuntimeException(e) ;
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
         }
     }
@@ -200,8 +223,7 @@ class RequestHandler extends Thread {
         }
         writer(tasksOutput.toString());
     }
-
-
+    //****************************************************************
     private void deletetask(String username,String name) throws IOException {
         File file = new File("src/main/resources/Tasks/" + username + ".txt");
         Scanner scanner =new Scanner(file);
@@ -219,7 +241,7 @@ class RequestHandler extends Thread {
         scanner.close();
         showtasks(username);
     }
-
+    //****************************************************************
     private void addtask(String username, String name, String dateTime, String description) throws IOException {
         File file = new File("src/main/resources/Tasks/" + username + ".txt");
         PrintWriter out = new PrintWriter(new FileWriter(file, true));
@@ -227,7 +249,7 @@ class RequestHandler extends Thread {
         out.close();
         showtasks(username);
     }
-
+    //****************************************************************
     private void showdetail(String username) throws JAXBException {
         List<Double> result = new ArrayList<>();
 
@@ -296,8 +318,7 @@ class RequestHandler extends Thread {
         System.out.println(stringBuilder.toString());
         writer(stringBuilder.toString());
     }
-
-
+    //****************************************************************
     private void addclass(String username, String teacher, String course) throws JAXBException {
         File studentsFolder = new File("src/main/resources/Students");
         File[] studentFiles = studentsFolder.listFiles();
@@ -346,8 +367,7 @@ class RequestHandler extends Thread {
 
         writer("");
     }
-
-
+    //****************************************************************
     private void showClass(String username) throws JAXBException {
         Set<Course> result = new HashSet<>();
 
@@ -389,8 +409,7 @@ class RequestHandler extends Thread {
         System.out.println(stringBuilder.toString());
         writer(stringBuilder.toString());
     }
-
-
+    //****************************************************************
     void Loginpage(String username, String password) throws JAXBException {
         Boolean studentExist = false;
         File xmls = new File("src/main/resources/Students");
@@ -405,7 +424,7 @@ class RequestHandler extends Thread {
         }
         writer(studentExist.toString());
     }
-
+    //****************************************************************
     void signuppage(String username, String studentID, String password) throws JAXBException {
         boolean studentIsRepetitive = false;
         JAXBContext context = JAXBContext.newInstance(Student.class);
@@ -435,7 +454,7 @@ class RequestHandler extends Thread {
             writer("not repetitive");
         }
     }
-
+    //****************************************************************
     void currentPasswordChecker(String username, String currentPassword) throws JAXBException {
         Boolean currentPasswordIsCorrect = false;
         JAXBContext context = JAXBContext.newInstance(Student.class);
@@ -454,7 +473,7 @@ class RequestHandler extends Thread {
 
         writer(currentPasswordIsCorrect.toString());
     }
-
+    //****************************************************************
     void changePassword(String username, String password) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance(Student.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
@@ -471,7 +490,7 @@ class RequestHandler extends Thread {
 
         writer(""); //just for closing dis & dos
     }
-
+    //****************************************************************
     private void assignmentPage(String username) throws JAXBException {
         ArrayList<Assignment> result = new ArrayList<>();
 
@@ -513,5 +532,91 @@ class RequestHandler extends Thread {
         }
         System.out.println(stringBuilder.toString());
         writer(stringBuilder.toString());
+    }
+    //****************************************************************
+    void initProfileData(String username) throws JAXBException, InterruptedException {
+        JAXBContext context = JAXBContext.newInstance(Student.class);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+
+        File xmls = new File("src/main/resources/Students");
+        File[] list_of_xmls = xmls.listFiles();
+
+        for (int i = 0; i < list_of_xmls.length ; i++) {
+            Student checker = (Student) unmarshaller.unmarshal(list_of_xmls[i]);
+            if (checker.getName().equals(username)) {
+                int currentTermCredit = 0 ;
+
+                for (int k = 0; k < checker.getTerms().get(checker.getTerms().size() - 1).getStudentCourses().size() ; k++)
+                    currentTermCredit += checker.getTerms().get(checker.getTerms().size() - 1).getStudentCourses().get(k).getCredit();
+
+                writer(checker.getStudentId() + "-" + checker.getTotalAverage() + "-" + checker.getCurrentTerm() + "-" + currentTermCredit + "-" + checker.getTotalPassedCredit());
+            }
+        }
+    }
+    //****************************************************************
+    void deleteAccount(String username) throws JAXBException {
+        String un = username ;
+        JAXBContext context = JAXBContext.newInstance(Student.class);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+
+        File xmls = new File("src/main/resources/Students");
+        File[] list_of_xmls = xmls.listFiles();
+
+        Student willBeDeleted = null;
+        for (int i = 0; i < list_of_xmls.length ; i++) {
+            Student checker = (Student) unmarshaller.unmarshal(list_of_xmls[i]);
+            if (checker.getName().equals(username))
+                willBeDeleted = checker ;
+        }
+        String studentID = willBeDeleted.getStudentId();
+
+        JAXBContext context_t = JAXBContext.newInstance(Teacher.class);
+        Unmarshaller unmarshaller_t = context_t.createUnmarshaller();
+        File xmls_teacher = new File("src/main/resources/Teachers");
+        File[] list_of_xmls_teacher = xmls_teacher.listFiles();
+        Teacher temp ;
+
+        for (int i = 0; i < list_of_xmls_teacher.length ; i++) {
+            temp = (Teacher) unmarshaller_t.unmarshal(list_of_xmls_teacher[i]);
+            ArrayList<Course> coursesOfTeacher = temp.getCourses();
+
+            for (int j = 0; j < coursesOfTeacher.size() ; j++) {
+                temp.RemoveStudent(coursesOfTeacher.get(j),new Student(willBeDeleted.getName(),willBeDeleted.getStudentId()));
+                File teacherFile = new File("src/main/resources/Teachers" + "/" + temp.getName() + ".xml");
+                JAXBContext editedVersion = JAXBContext.newInstance(Teacher.class);
+                Marshaller marsh = editedVersion.createMarshaller();
+                marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+                marsh.marshal(temp, teacherFile);
+            }
+        }
+
+        File finialDelete = new File("src/main/resources/Students" + "/" + studentID + ".xml");
+        finialDelete.delete();
+    }
+    //****************************************************************
+    void editAccount(String username ,String birthday ,String fatherName ,String nationalID ,String phone ,String fieldOfStudy) throws JAXBException, ParseException {
+        JAXBContext context = JAXBContext.newInstance(Student.class);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+
+        File xmls = new File("src/main/resources/Students");
+        File[] list_of_xmls = xmls.listFiles();
+
+        for (int i = 0; i < list_of_xmls.length ; i++) {
+            Student checker = (Student) unmarshaller.unmarshal(list_of_xmls[i]);
+            if (checker.getName().equals(username))
+            {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                checker.setBirthDate(formatter.parse(birthday));
+                checker.setFatherName(fatherName);
+                checker.setNationalId(nationalID);
+                checker.setPhoneNumber(phone);
+                checker.setField(BeheshtiUniversityField.valueOf(fieldOfStudy.split("\\.")[1]));
+                File StudentFile = new File("src/main/resources/Students" + "/" + checker.getStudentId() + ".xml");
+                JAXBContext editedVersion = JAXBContext.newInstance(Student.class);
+                Marshaller marshaller2 = editedVersion.createMarshaller();
+                marshaller2.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+                marshaller2.marshal(checker, StudentFile);
+            }
+        }
     }
 }

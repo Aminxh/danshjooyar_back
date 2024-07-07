@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<student>
+    <birthDate>2024-07-08T00:00:00+03:30</birthDate>
+    <currentAverage>0.0</currentAverage>
+    <currentTerm>0</currentTerm>
+    <fatherName>ahmad</fatherName>
+    <field>SOCIAL_SCIENCES</field>
+    <name>amin</name>
+    <nationalId>1234567899</nationalId>
+    <PASSWORD>Aminxh1234@@</PASSWORD>
+    <phoneNumber>0912345678</phoneNumber>
+    <studentId>402243082</studentId>
+    <terms>
+        <avg>0.0</avg>
+        <termNumber>1</termNumber>
+        <totalThisTermCredit>0</totalThisTermCredit>
+    </terms>
+    <totalAverage>0.0</totalAverage>
+    <totalPassedCredit>0</totalPassedCredit>
+</student>

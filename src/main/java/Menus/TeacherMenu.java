@@ -341,7 +341,6 @@ public class TeacherMenu {
                             for (int j = 0; j < studentChekerCourses.size(); j++) {
                                 if (studentChekerCourses.get(j).getName().equals(name)) {
                                     studentChekerCourses.get(j).setScore(Double.parseDouble(detail[2]));
-//                                            studentChecker.getTerms().get(studentChecker.getTerms().size() - 1).getStudentCourses().get(j).setScore(Double.parseDouble(detail[2]));
                                     File StudentFile = new File("src/main/resources/Students" + "/" + detail[1] + ".xml");
                                     JAXBContext editedVersion = JAXBContext.newInstance(Student.class);
                                     Marshaller marshaller2 = editedVersion.createMarshaller();
