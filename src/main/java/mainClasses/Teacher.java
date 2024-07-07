@@ -44,7 +44,7 @@ public class Teacher implements Serializable {
      *
      * @param course The course to be added.
      */
-    public void AddCourse(Course course) {
+    public synchronized void AddCourse(Course course) {
         if (course == null) {
             throw new CourseNotFoundException();
         }
@@ -58,7 +58,7 @@ public class Teacher implements Serializable {
      *
      * @param course The course to be removed.
      */
-    public void RemoveCourse(Course course) {
+    public synchronized void RemoveCourse(Course course) {
         if (courses.contains(course)) {
             courses.remove(course);
         } else {
@@ -72,7 +72,7 @@ public class Teacher implements Serializable {
      * @param course  The course to which the student will be added.
      * @param student The student to be added.
      */
-    public void AddStudent(Course course, Student student) {
+    public synchronized void AddStudent(Course course, Student student) {
         if (!courses.contains(course)) {
             throw new CourseNotFoundException();
         }
@@ -85,14 +85,18 @@ public class Teacher implements Serializable {
      * @param course  The course from which the student will be removed.
      * @param student The student to be removed.
      */
-    public void RemoveStudent(Course course, Student student) {
-        if (!courses.contains(course)) {
-            throw new CourseNotFoundException();
+    public synchronized void RemoveStudent(Course course, Student student) {
+        for (int i = 0; i < getCourses().size() ; i++) {
+            if(getCourses().get(i).getName().equals(course.getName()))
+            {
+                for (int j = 0; j < getCourses().get(i).getStudents().size() ; j++) {
+                    if(getCourses().get(i).getStudents().get(j).getStudentId().equals(student.getStudentId())) {
+                        getCourses().get(i).getStudents().remove(j);
+                        return;
+                    }
+                }
+            }
         }
-        if (!getCourses().get(getCourses().indexOf(course)).getStudents().contains(student)) {
-            throw new StudentNotFoundException();
-        }
-        getCourses().get(getCourses().indexOf(course)).RemoveStudent(student);
     }
 
     /**
@@ -101,7 +105,7 @@ public class Teacher implements Serializable {
      * @param course     The course to which the assignment will be added.
      * @param assignment The assignment to be added.
      */
-    public void AddAssignment(Course course, Assignment assignment) {
+    public synchronized void AddAssignment(Course course, Assignment assignment) {
         if (!courses.contains(course)) {
             throw new CourseNotFoundException();
         }
@@ -114,7 +118,7 @@ public class Teacher implements Serializable {
      * @param course     The course from which the assignment will be removed.
      * @param assignment The assignment to be removed.
      */
-    public void RemoveAssignment(Course course, Assignment assignment) {
+    public synchronized void RemoveAssignment(Course course, Assignment assignment) {
         if (!courses.contains(course)) {
             throw new CourseNotFoundException();
         }
@@ -133,7 +137,7 @@ public class Teacher implements Serializable {
      * @param student The student who submitted the assignment.
      * @param score   The score to assign to the assignment.
      */
-    public void Score(Course course, Student student, double score) {
+    public synchronized void Score(Course course, Student student, double score) {
         if (!courses.contains(course)) {
             throw new CourseNotFoundException();
         }
@@ -155,7 +159,7 @@ public class Teacher implements Serializable {
      * @param assignment The assignment whose deadline will be edited.
      * @param newDate    The new deadline date.
      */
-    public void DeadLineTimeEdit(Course course, Assignment assignment, Date newDate) {
+    public synchronized void DeadLineTimeEdit(Course course, Assignment assignment, Date newDate) {
         if (!courses.contains(course)) {
             throw new CourseNotFoundException();
         }
@@ -172,7 +176,7 @@ public class Teacher implements Serializable {
      * @param course     The course containing the assignment.
      * @param assignment The assignment to be activated.
      */
-    public void AssignmentActivator(Course course, Assignment assignment) {
+    public synchronized void AssignmentActivator(Course course, Assignment assignment) {
         if (!courses.contains(course)) {
             throw new CourseNotFoundException();
         }
