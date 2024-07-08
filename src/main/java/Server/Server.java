@@ -221,7 +221,7 @@ class RequestHandler extends Thread {
 
 //-o-o-o-o-o-oo-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o--o-o-o-o-o
 
-    private void showtasks(String username) {
+    private synchronized void showtasks(String username) {
         File file = new File("src/main/resources/Tasks/" + username + ".txt");
         StringBuilder tasksOutput = new StringBuilder();
         try (Scanner scanner = new Scanner(file)) {
