@@ -19,17 +19,18 @@ public class SigningTeacher {
         boolean ok = false;
         String name = null;
         Teacher teacher;
+
         try {
             System.out.println("Enter your name");
             name = scanner.nextLine();;
             JAXBContext unmarshalContext = JAXBContext.newInstance(Teacher.class);
             Unmarshaller unmarshaller = unmarshalContext.createUnmarshaller();
              teacher = (Teacher) unmarshaller.unmarshal(new File("src/main/resources/Teachers"+"\\"+name+".xml"));
-        }
-        catch (Exception ex){
+        } catch (Exception ex){
             System.out.println("username not found");
             return;
         }
+
         while (!ok) {
             System.out.println("Enter your Password");
             String password = scanner.nextLine();

@@ -16,11 +16,10 @@ import java.util.Scanner;
 
 public class AdminMenu {
     public static void adminmenu() throws InterruptedException, IOException, JAXBException {
+
         boolean finish = false;
+
         while (!finish) {
-            //Add teacher
-            //Remove teacher
-            //mainClasses.Teacher method
             System.out.println("1-Add teacher");
             System.out.println("2-Remove teacher");
             System.out.println("3-Teacher method");
@@ -28,8 +27,10 @@ public class AdminMenu {
             boolean ok = false;
             String input = scanner.nextLine();
             boolean valid=false;
+
             while (!valid)
                 switch (input) {
+//-------------------------------------------------------------------------------
                     case "1": {
                         valid=true;
                         RegisterTeacher.register();
@@ -54,6 +55,8 @@ public class AdminMenu {
                         break;
 
                     }
+
+//-------------------------------------------------------------------------------
                     case "2": {
                         valid=true;
                         System.out.println("Write teacher name");
@@ -77,6 +80,8 @@ public class AdminMenu {
                         }
                         break;
                     }
+
+//-------------------------------------------------------------------------------
                     case "3": {
                         valid=true;
                         System.out.println("Write teacher name");

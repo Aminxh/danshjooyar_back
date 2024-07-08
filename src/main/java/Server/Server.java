@@ -33,6 +33,10 @@ public class Server {
     }
 }
 
+// ---------------------------------------------------------------------------
+// ---------------------------SEPARATE CLASSES--------------------------------
+// ---------------------------------------------------------------------------
+
 class RequestHandler extends Thread {
     Socket socket;
     DataInputStream dis;
@@ -43,6 +47,8 @@ class RequestHandler extends Thread {
         dis = new DataInputStream(socket.getInputStream());
         dos = new DataOutputStream(socket.getOutputStream());
     }
+
+//-------------------------------------------------------------------------------
 
     String listener() {
         StringBuilder num = new StringBuilder();
@@ -67,6 +73,7 @@ class RequestHandler extends Thread {
         return listen.toString();
     }
 
+//-------------------------------------------------------------------------------
     void writer(String write) {
         if (write != null && !write.isEmpty()) {
             try {
@@ -87,6 +94,7 @@ class RequestHandler extends Thread {
         System.out.println("invalid write");
     }
 
+//-------------------------------------------------------------------------------
     @Override
     public void run() {
         System.out.println("ready");
@@ -172,7 +180,7 @@ class RequestHandler extends Thread {
             case "SHOWTASKS":
                 showtasks(splited[1]);
                 break;
-
+//-------------------------------------------------------------------------------
             case "ADDTASK":
                 try {
                     addtask(splited[1],splited[2],splited[3],splited[4] );
@@ -180,7 +188,7 @@ class RequestHandler extends Thread {
                     throw new RuntimeException(e);
                 }
                 break;
-
+//-------------------------------------------------------------------------------
             case "DELETETASK":
                 try {
                     deletetask(splited[1],splited[2]);
@@ -211,6 +219,8 @@ class RequestHandler extends Thread {
         }
     }
 
+//-o-o-o-o-o-oo-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o--o-o-o-o-o
+
     private void showtasks(String username) {
         File file = new File("src/main/resources/Tasks/" + username + ".txt");
         StringBuilder tasksOutput = new StringBuilder();
@@ -223,7 +233,9 @@ class RequestHandler extends Thread {
         }
         writer(tasksOutput.toString());
     }
+
     //****************************************************************
+
     private void deletetask(String username,String name) throws IOException {
         File file = new File("src/main/resources/Tasks/" + username + ".txt");
         Scanner scanner =new Scanner(file);
@@ -235,13 +247,18 @@ class RequestHandler extends Thread {
             }
         }
 
+        File finialDelete = new File("src/main/resources/Tasks" + "/" + username + ".txt");
+        finialDelete.delete();
+
         PrintWriter out = new PrintWriter(new FileWriter(file,false));
         out.print(stringBuilder);
         out.close();
         scanner.close();
         showtasks(username);
     }
+
     //****************************************************************
+
     private void addtask(String username, String name, String dateTime, String description) throws IOException {
         File file = new File("src/main/resources/Tasks/" + username + ".txt");
         PrintWriter out = new PrintWriter(new FileWriter(file, true));
@@ -249,6 +266,7 @@ class RequestHandler extends Thread {
         out.close();
         showtasks(username);
     }
+
     //****************************************************************
 
     private void showdetail(String username) throws JAXBException {
@@ -318,7 +336,11 @@ class RequestHandler extends Thread {
 
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < result.size(); i++) {
+            try {
             stringBuilder.append(result.get(i));
+            } catch (Exception e) {
+                stringBuilder.append(0);
+            }
             if (i < result.size() - 1) {
                 stringBuilder.append("~");
             }
@@ -328,8 +350,8 @@ class RequestHandler extends Thread {
         writer(stringBuilder.toString());
     }
 
-
     //****************************************************************
+
     private void addclass(String username, String teacher, String course) throws JAXBException {
         File studentsFolder = new File("src/main/resources/Students");
         File[] studentFiles = studentsFolder.listFiles();
@@ -378,7 +400,9 @@ class RequestHandler extends Thread {
 
         writer("");
     }
+
     //****************************************************************
+
     private void showClass(String username) throws JAXBException {
         Set<Course> result = new HashSet<>();
 
@@ -420,7 +444,9 @@ class RequestHandler extends Thread {
         System.out.println(stringBuilder.toString());
         writer(stringBuilder.toString());
     }
+
     //****************************************************************
+
     void Loginpage(String username, String password) throws JAXBException {
         Boolean studentExist = false;
         File xmls = new File("src/main/resources/Students");
@@ -435,7 +461,9 @@ class RequestHandler extends Thread {
         }
         writer(studentExist.toString());
     }
+
     //****************************************************************
+
     void signuppage(String username, String studentID, String password) throws JAXBException {
         boolean studentIsRepetitive = false;
         JAXBContext context = JAXBContext.newInstance(Student.class);
@@ -465,7 +493,9 @@ class RequestHandler extends Thread {
             writer("not repetitive");
         }
     }
+
     //****************************************************************
+
     void currentPasswordChecker(String username, String currentPassword) throws JAXBException {
         Boolean currentPasswordIsCorrect = false;
         JAXBContext context = JAXBContext.newInstance(Student.class);
@@ -484,7 +514,9 @@ class RequestHandler extends Thread {
 
         writer(currentPasswordIsCorrect.toString());
     }
+
     //****************************************************************
+
     void changePassword(String username, String password) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance(Student.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
@@ -506,7 +538,9 @@ class RequestHandler extends Thread {
 
         writer(""); //just for closing dis & dos
     }
+
     //****************************************************************
+
     private void assignmentPage(String username) throws JAXBException {
         ArrayList<Assignment> result = new ArrayList<>();
 
@@ -549,7 +583,9 @@ class RequestHandler extends Thread {
         System.out.println(stringBuilder.toString());
         writer(stringBuilder.toString());
     }
+
     //****************************************************************
+
     void initProfileData(String username) throws JAXBException, InterruptedException {
         JAXBContext context = JAXBContext.newInstance(Student.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
@@ -569,7 +605,9 @@ class RequestHandler extends Thread {
             }
         }
     }
+
     //****************************************************************
+
     void deleteAccount(String username) throws JAXBException {
         String un = username ;
         JAXBContext context = JAXBContext.newInstance(Student.class);
@@ -612,7 +650,9 @@ class RequestHandler extends Thread {
         file.delete();
         writer("");
     }
+
     //****************************************************************
+
     void editAccount(String username ,String birthday ,String fatherName ,String nationalID ,String phone ,String fieldOfStudy) throws JAXBException, ParseException {
         JAXBContext context = JAXBContext.newInstance(Student.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();

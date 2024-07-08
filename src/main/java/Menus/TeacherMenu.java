@@ -11,13 +11,14 @@ import java.util.Objects;
 import java.util.Scanner;
 public class TeacherMenu {
     static void teachermenu(Teacher teacher) throws IOException, InterruptedException, JAXBException {
+
         File TeachersFile = new File("src/main/resources/Teachers" + "\\" + teacher.getName() + ".xml");
         boolean finish = false;
         while (!finish) {
-            System.out.println("1-Add course");//ok
-            System.out.println("2-Remove course");//ok
-            System.out.println("3-Add student");//ok
-            System.out.println("4-Remove student");//ok
+            System.out.println("1-Add course");
+            System.out.println("2-Remove course");
+            System.out.println("3-Add student");
+            System.out.println("4-Remove student");
             System.out.println("5-Add Assignment");
             System.out.println("6-Remove Assignment");
             System.out.println("7-Grading");
@@ -33,6 +34,8 @@ public class TeacherMenu {
             while (!validInput) {
                 String input = scanner.nextLine();
                 switch (input) {
+
+//-------------------------------------------------------------------------------
                     case "1": {
                         validInput = true;
                         System.out.println("Enter Course Name");
@@ -69,6 +72,8 @@ public class TeacherMenu {
                         System.out.flush();
                         break;
                     }
+
+//-------------------------------------------------------------------------------
                     case "2": {
                         try {
                             validInput = true;
@@ -110,6 +115,8 @@ public class TeacherMenu {
                         System.out.flush();
                         break;
                     }
+
+//-------------------------------------------------------------------------------
                     case "3": {
                         try {
                             JAXBContext context = JAXBContext.newInstance(Student.class);
@@ -164,6 +171,8 @@ public class TeacherMenu {
                         System.out.flush();
                         break;
                     }
+
+//-------------------------------------------------------------------------------
                     case "4": {
                         try {
                             validInput = true;
@@ -207,6 +216,8 @@ public class TeacherMenu {
                         System.out.flush();
                         break;
                     }
+
+//-------------------------------------------------------------------------------
                     case "5": {
                         try {
                             JAXBContext context = JAXBContext.newInstance(Student.class);
@@ -273,6 +284,8 @@ public class TeacherMenu {
                         System.out.flush();
                         break;
                     }
+
+//-------------------------------------------------------------------------------
                     case "6": {
                         try {
                             validInput = true;
@@ -314,6 +327,8 @@ public class TeacherMenu {
                         System.out.flush();
                         break;
                     }
+
+//-------------------------------------------------------------------------------
                     case "7": {
                         try {
                             File xmls = new File("src/main/resources/Students");
@@ -381,6 +396,8 @@ public class TeacherMenu {
                         System.out.flush();
                         break;
                     }
+
+//-------------------------------------------------------------------------------
                     case "8": {
                         try {
                             validInput = true;
@@ -424,6 +441,8 @@ public class TeacherMenu {
                         System.out.flush();
                         break;
                     }
+
+//-------------------------------------------------------------------------------
                     case "9": {
                         try {
                             validInput = true;
@@ -464,6 +483,8 @@ public class TeacherMenu {
                         System.out.flush();
                         break;
                     }
+
+//-------------------------------------------------------------------------------
                     default:
                         System.out.println("Choose valid Number");
                         System.out.println("done!");

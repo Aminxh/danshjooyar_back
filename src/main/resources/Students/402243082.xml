@@ -2,15 +2,15 @@
 <student>
     <currentAverage>0.0</currentAverage>
     <currentTerm>0</currentTerm>
-    <name>AliMahdavi</name>
-    <PASSWORD>402243104</PASSWORD>
-    <studentId>402243104</studentId>
+    <name>AminAzizi</name>
+    <PASSWORD>402243082</PASSWORD>
+    <studentId>402243082</studentId>
     <terms>
         <avg>0.0</avg>
         <studentCourses>
             <credit>0</credit>
             <name>AP</name>
-            <score>0.0</score>
+            <score>18.0</score>
         </studentCourses>
         <termNumber>1</termNumber>
         <totalThisTermCredit>0</totalThisTermCredit>
