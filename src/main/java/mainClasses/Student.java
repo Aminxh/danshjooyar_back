@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,16 +27,17 @@ public class Student implements Serializable {
     private String StudentId;
     private BeheshtiUniversityField field;
     private String phoneNumber;
-    private int currentTerm = 0;
     private ArrayList<Term> terms = new ArrayList<>();
     private double totalAverage = 0;
     private double currentAverage = 0;
     private int totalPassedCredit = 0;
 
-
     {
         terms.add(new Term(1));
     }
+    private int currentTerm = terms.size();
+
+    private static final DecimalFormat df = new DecimalFormat("0.00");
 
     public Student(String name, String studentId) {
         this.name = name;
@@ -48,7 +50,8 @@ public class Student implements Serializable {
 
     @XmlElement
     public double getCurrentAverage() {
-        return currentAverage;
+        currentAverage = terms.get(currentTerm - 1).avgCalculate();
+        return Double.parseDouble(df.format(currentAverage));
     }
 
     public void setCurrentAverage(double currentAverage) {
@@ -80,7 +83,8 @@ public class Student implements Serializable {
 
     @XmlElement
     public double getTotalAverage() {
-        return totalAverage;
+        totalAverage = totalAvg();
+        return Double.parseDouble(df.format(totalAverage));
     }
 
     public void setTotalAverage(double totalAverage) {
@@ -89,12 +93,12 @@ public class Student implements Serializable {
 
     @XmlElement
     public int getTotalPassedCredit() {
-        int totalCredits = 0;
+        totalPassedCredit = 0;
         for (Term term : terms) {
             int termCredits = term.getTotalThisTermCredit();
-            totalCredits += termCredits;
+            totalPassedCredit += termCredits;
         }
-        return totalCredits;
+        return totalPassedCredit;
     }
 
     public void setTotalPassedCredit(int totalPassedCredit) {
@@ -184,43 +188,28 @@ public class Student implements Serializable {
         return terms.get(currentTerm - 1).getTotalThisTermCredit();
     }
 
-
-public double termAvgDetail(int term) {
-    if (terms.size() < term) {
-        throw new TermNotFoundException();
-    }
-    Term specifiedTerm = terms.get(term - 1);
-    double avg = specifiedTerm.avgCalculate();
-    return avg;
-}
-
-    public double termAvgDetail() {
-        return terms.get(currentTerm - 1).avgCalculate();
-    }
-
     public void newTerm() {
         currentTerm++;
         terms.add(new Term(currentTerm));
     }
 
-public double totalAvg() {
-    double sum = 0;
-    int totalCredits = getTotalPassedCredit();
+    public double totalAvg() {
+        double sum = 0;
+        int totalCredits = getTotalPassedCredit();
 
-    System.out.println("Debug: Calculating total average");
-    for (Term term : terms) {
-        for (StudentCourse course : term.getStudentCourses()) {
-            sum += course.getScore() * course.getCredit();
+        for (Term term : terms) {
+            for (StudentCourse course : term.getStudentCourses()) {
+                sum += course.getScore() * course.getCredit();
+            }
         }
-    }
 
-    if (totalCredits == 0) {
-        return 0;
-    }
+        if (totalCredits == 0) {
+            return 0;
+        }
 
-    totalAverage = sum / totalCredits;
-    return totalAverage;
-}
+        totalAverage = sum / totalCredits;
+        return Double.parseDouble(df.format(totalAverage));
+    }
 
     public void AllCoursePrinter() {
         for (Term term : terms) {
@@ -234,10 +223,6 @@ public double totalAvg() {
 
     public void totalAvgPrinter() {
         System.out.println(totalAvg());
-    }
-
-    public void CurrentTermAvgPrinter() {
-        System.out.println(termAvgDetail());
     }
 
     @XmlElement

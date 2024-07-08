@@ -328,7 +328,7 @@ class RequestHandler extends Thread {
                 }
             }
             result.add((double) totalAssignments);
-            result.add((double) totalActiveAssignments);
+            result.add((double) totalAssignments-totalActiveAssignments);
         } else {
             result.add(0.0);
             result.add(0.0);
@@ -378,9 +378,6 @@ class RequestHandler extends Thread {
 
                     if (existingCourse.isPresent()) {
                         existingCourse.get().AddStudent(student);
-
-                        student.getTerms().get(student.getTerms().size() - 1)
-                                .getStudentCourses().add(new StudentCourse(course, existingCourse.get().getCredit()));
 
                         JAXBContext studentMarshallerContext = JAXBContext.newInstance(Student.class);
                         Marshaller studentMarshaller = studentMarshallerContext.createMarshaller();
@@ -596,18 +593,11 @@ class RequestHandler extends Thread {
         for (int i = 0; i < list_of_xmls.length ; i++) {
             Student checker = (Student) unmarshaller.unmarshal(list_of_xmls[i]);
             if (checker.getName().equals(username)) {
-                int currentTermCredit = 0 ;
-
-                for (int k = 0; k < checker.getTerms().get(checker.getTerms().size() - 1).getStudentCourses().size() ; k++)
-                    currentTermCredit += checker.getTerms().get(checker.getTerms().size() - 1).getStudentCourses().get(k).getCredit();
-
-                writer(checker.getStudentId() + "-" + checker.getTotalAverage() + "-" + checker.getCurrentTerm() + "-" + currentTermCredit + "-" + checker.getTotalPassedCredit());
+                writer(checker.getStudentId() + "-" + checker.getTotalAverage() + "-" + checker.getCurrentTerm() + "-" + checker.termCreditDetail() + "-" + checker.getTotalPassedCredit());
             }
         }
     }
-
     //****************************************************************
-
     void deleteAccount(String username) throws JAXBException {
         String un = username ;
         JAXBContext context = JAXBContext.newInstance(Student.class);

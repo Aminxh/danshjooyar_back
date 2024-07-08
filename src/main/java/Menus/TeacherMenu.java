@@ -5,6 +5,8 @@ import java.beans.XMLEncoder;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
@@ -123,20 +125,32 @@ public class TeacherMenu {
                             Marshaller marshaller = context.createMarshaller();
                             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
                             validInput = true;
-                            System.out.println("First Enter Course Then " + "Enter new students number" + " then their name and studentID (name-StudentID)");
+                            System.out.println("First Enter Coursename "  );
                             String courseName = scanner.nextLine();
+                            System.out.println("Enter Course Credit");
+                            String credit = scanner.nextLine();
+                            System.out.println("Enter new students number");
                             String number = scanner.nextLine();
+                            System.out.println(" then their name and studentID (name-StudentID)");
                             int number2 = Integer.parseInt(number);
                             for (int i = 0; i < number2; i++) {
                                 String[] detail = scanner.nextLine().split("-");
-                                Course course = new Course(courseName);
+                                Course course = new Course(courseName,Integer.parseInt(credit));
                                 teacher.AddStudent(course, new Student(detail[0], detail[1]));
+                                if (Files.exists(Path.of("src/main/resources/Students" + "\\" + detail[1] + ".xml"))){
                                 File StudentFile = new File("src/main/resources/Students" + "\\" + detail[1] + ".xml");
-                                Student student =new Student(detail[0], detail[1]);
-                                student.addCourse(course);
-                                marshaller.marshal(student, StudentFile);
-                                File file = new File("src/main/resources/Tasks/"+detail[1]+".txt");
-
+                                JAXBContext context2 = JAXBContext.newInstance(Student.class);
+                                Unmarshaller unmarshaller = context2.createUnmarshaller();
+                                Student checker = (Student) unmarshaller.unmarshal(StudentFile);
+                                checker.addCourse(course);
+                                marshaller.marshal(checker, StudentFile);
+                                }
+                                else {
+                                    File StudentFile = new File("src/main/resources/Students" + "\\" + detail[1] + ".xml");
+                                    Student student =new Student(detail[0], detail[1]);
+                                    student.addCourse(course);
+                                    marshaller.marshal(student, StudentFile);
+                                }
                             }
                             System.out.println("done!");
                             Thread.sleep(1000);

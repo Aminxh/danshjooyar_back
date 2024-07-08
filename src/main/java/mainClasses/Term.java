@@ -10,7 +10,7 @@ import java.util.Objects;
 public class Term implements Serializable {
 
     private int totalThisTermCredit = 0;
-    private double avg = 0;
+    private double avg ;
     private int termNumber;
     private ArrayList<StudentCourse> studentCourses = new ArrayList<>();
 
@@ -56,7 +56,7 @@ public class Term implements Serializable {
      */
     @XmlElement
     public int getTotalThisTermCredit() {
-        totalThisTermCredit = 0;  // Resetting to recalculate
+        totalThisTermCredit = 0;
         for (StudentCourse studentCourse : studentCourses) {
             totalThisTermCredit += studentCourse.getCredit();
         }
@@ -65,7 +65,7 @@ public class Term implements Serializable {
 
     @XmlElement
     public double getAvg() {
-        return avg;
+        return avgCalculate();
     }
 
     public void setAvg(double avg) {
