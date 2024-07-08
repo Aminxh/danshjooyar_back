@@ -6,10 +6,12 @@ which means many clients can use the App at the same time . hope you enjoy it .
 ## Installation and Setup
 
 1.Make sure JDK and a appropriate IDE are installed on your system.
+
 2.Clone the source code:
 git clone https://github.com/AloofAli/danshjoyar-back.git
 
 3.Open the project in IDE.
+
 4.Run the project.
 
 ## Project Structure
